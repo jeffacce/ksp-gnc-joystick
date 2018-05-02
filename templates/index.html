@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>KSP Remote</title>
+<meta name="viewport" content="width=device-width,user-scalable=yes" />
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<style>
+body {
+	font-family: helvetica, arial, sans serif;
+}
+</style>
+</head>
+
+<body>
+<ul>
+	<li>alpha: <span id="alpha"></span> degree</li>
+	<li>beta: <span id="beta"></span> degree</li>
+	<li>gamma: <span id="gamma"></span> degree</li>
+	<li>status: <span id='status'></span></li>
+</ul>
+<div class='container' style='margin: 100px;'>
+	<input id='throttle' type='range' style='width: 200px; transform: rotate(270deg);'/>
+</div>
+<script type="text/javascript">
+
+window.addEventListener('deviceorientation', function(e) {
+	$("#alpha").text(e.alpha);
+	$("#beta").text(e.beta);
+	$("#gamma").text(e.gamma);
+	$.ajax({
+		type: 'POST',
+		url: "/attitude_update",
+		data: JSON.stringify([e.alpha, e.beta, e.gamma]),
+		success: function(response) {
+			$("#status").text('POST ok');
+		},
+		error: function() {
+			$("#status").text('POST failed');
+		},
+	});
+})
+
+var throttle = $('#throttle')[0]
+throttle.addEventListener('input', function(e) {
+	$.ajax({
+		type: 'POST',
+		url: '/throttle_update',
+		data: JSON.stringify($('#throttle').val()),
+		success: function(response) {
+			$('#status').text('POST ok');
+		},
+		error: function(response) {
+			$('#status').text('POST failed');
+		},
+	})
+})
+
+</script>
+
+</body>
+</html>

@@ -23,21 +23,28 @@ body {
 </div>
 <script type="text/javascript">
 
+var last_post = -1;
+var fps = 60;
+var frame_ms = parseInt(1000 / fps);
+
 window.addEventListener('deviceorientation', function(e) {
-	$("#alpha").text(e.alpha);
-	$("#beta").text(e.beta);
-	$("#gamma").text(e.gamma);
-	$.ajax({
-		type: 'POST',
-		url: "/attitude_update",
-		data: JSON.stringify([e.alpha, e.beta, e.gamma]),
-		success: function(response) {
-			$("#status").text('POST ok');
-		},
-		error: function() {
-			$("#status").text('POST failed');
-		},
-	});
+	if (new Date().getTime() > (last_post + frame_ms)) {
+		$("#alpha").text(e.alpha);
+		$("#beta").text(e.beta);
+		$("#gamma").text(e.gamma);
+		$.ajax({
+			type: 'POST',
+			url: "/attitude_update",
+			data: JSON.stringify([e.alpha, e.beta, e.gamma]),
+			success: function(response) {
+				$("#status").text('POST ok');
+			},
+			error: function() {
+				$("#status").text('POST failed');
+			},
+		});
+		last_post = new Date().getTime();
+	}
 })
 
 var throttle = $('#throttle')[0]

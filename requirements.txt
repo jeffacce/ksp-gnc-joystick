@@ -1,0 +1,10 @@
+click==6.7
+Flask==1.0.2
+itsdangerous==0.24
+Jinja2==2.10
+krpc==0.4.5
+MarkupSafe==1.0
+numpy==1.14.3
+protobuf==3.5.2.post1
+six==1.11.0
+Werkzeug==0.14.1

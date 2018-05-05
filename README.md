@@ -1,6 +1,13 @@
 # ksp-gnc-joystick
 Kerbal Space Program Phone Joystick
 
+## Dependencies Setup
+1. Run 'virtualenv env' in the ksp-gnc-joystick directory to create a Python virtual environment
+2. Run 'env/bin/activate' (Linux, Mac OS) or 'env/Scripts/activate' (Windows) to switch to the virtual environment
+3. Run 'pip install -r requirements.txt' to install dependencies in this virtual environment (needed only the first time)
+
+It is possible, but not recommended, to install these packages globally
+
 ## Starting a server
 1. Go into Kerbal Space Program (1.4.1 to be compatible with kRPC) and start flying a plane.
 2. Start a kRPC server.
